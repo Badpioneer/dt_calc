@@ -1,0 +1,29 @@
+<div class="calculator">
+    <h2>Калькулятор временных интервалов</h2>
+
+    <div class="input-group">
+        <label for="start-time">1. Дата и время запуска:</label>
+        <input type="datetime-local" id="start-time" name="start-time" step="1">
+    </div>
+
+    <div class="input-group">
+        <label for="on-time">2. Дата и время включения:</label>
+        <input type="datetime-local" id="on-time" name="on-time" step="1">
+    </div>
+
+    <div class="input-group">
+        <label for="off-time">3. Дата и время выключения:</label>
+        <input type="datetime-local" id="off-time" name="off-time" step="1">
+    </div>
+
+    <div class="buttons">
+        <button id="calculate-btn">Рассчитать</button>
+        <button id="reset-btn">Сбросить</button>
+    </div>
+
+    <div class="results">
+        <h3>Результаты:</h3>
+        <p id="result-on"></p>
+        <p id="result-off"></p>
+        <p id="error-message"></p> </div>
+</div>
