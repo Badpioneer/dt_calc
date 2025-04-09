@@ -6,7 +6,7 @@ const calculateBtn = document.getElementById('calculate-btn');
 const resetBtn = document.getElementById('reset-btn');
 const resultOnP = document.getElementById('result-on');
 const resultOffP = document.getElementById('result-off');
-const errorMessageP = document.getElementById('error-message'); // Параграф для ошибок
+const errorMessageP = document.getElementById('error-message');
 
 // --- Функции ---
 
@@ -24,7 +24,9 @@ function formatDuration(ms) {
   const hours = totalHours % 24;
   const days = Math.floor(totalHours / 24);
 
-  return `${days} дней ${hours} часов ${minutes} минут ${seconds} секунд`;
+  // ================== ИЗМЕНЕНИЕ ФОРМАТА ВЫВОДА ==================
+  return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  // ============================================================
 }
 
 // Основная функция расчета
@@ -32,8 +34,8 @@ function calculateDurations() {
   // Очищаем предыдущие результаты и скрываем блок ошибки
   resultOnP.textContent = '';
   resultOffP.textContent = '';
-  errorMessageP.textContent = ''; // Очищаем текст ошибки
-  errorMessageP.classList.remove('visible'); // Скрываем блок ошибки
+  errorMessageP.textContent = '';
+  errorMessageP.classList.remove('visible');
 
   // Получаем значения из полей ввода
   const startTimeValue = startTimeInput.value;
@@ -42,8 +44,9 @@ function calculateDurations() {
 
   // Проверка на заполненность полей
   if (!startTimeValue || !onTimeValue || !offTimeValue) {
-    errorMessageP.textContent = 'Ошибка: Пожалуйста, заполните все поля дат и времени.';
-    errorMessageP.classList.add('visible'); // Показываем блок ошибки
+    // Используем текст ошибки на английском
+    errorMessageP.textContent = 'Error: Please fill in all date and time fields.';
+    errorMessageP.classList.add('visible');
     return;
   }
 
@@ -55,8 +58,8 @@ function calculateDurations() {
 
     // Проверка на валидность дат
     if (isNaN(startDate) || isNaN(onDate) || isNaN(offDate)) {
-        errorMessageP.textContent = 'Ошибка: Неверный формат одной или нескольких дат.';
-        errorMessageP.classList.add('visible'); // Показываем блок ошибки
+        errorMessageP.textContent = 'Error: Invalid date format detected.';
+        errorMessageP.classList.add('visible');
         return;
     }
 
@@ -66,33 +69,36 @@ function calculateDurations() {
 
     // Проверка, что время включения/выключения не раньше времени старта
      if (diffOnMs < 0) {
-        errorMessageP.textContent = 'Ошибка: Время включения не может быть раньше времени запуска.';
-        errorMessageP.classList.add('visible'); // Показываем блок ошибки
-        return; // Выходим из функции
+        errorMessageP.textContent = 'Error: "Draw from" time cannot be earlier than "Activation time".';
+        errorMessageP.classList.add('visible');
+        return;
      }
      if (diffOffMs < 0) {
-        errorMessageP.textContent = 'Ошибка: Время выключения не может быть раньше времени запуска.';
-        errorMessageP.classList.add('visible'); // Показываем блок ошибки
-        return; // Выходим из функции
+        errorMessageP.textContent = 'Error: "Draw before" time cannot be earlier than "Activation time".';
+        errorMessageP.classList.add('visible');
+        return;
      }
 
-    // ================== НОВАЯ ПРОВЕРКА ==================
     // Проверка, что время выключения не раньше времени включения
     if (offDate.getTime() < onDate.getTime()){
-        errorMessageP.textContent = 'Ошибка: Время выключения не может быть раньше времени включения.';
-        errorMessageP.classList.add('visible'); // Показываем блок ошибки
-        return; // Выходим из функции, не показывая результаты расчетов
+        errorMessageP.textContent = 'Error: "Draw before" time cannot be earlier than "Draw from" time.';
+        errorMessageP.classList.add('visible');
+        return;
     }
-    // =====================================================
 
     // Если все проверки пройдены, форматируем и выводим результаты
-    resultOnP.textContent = `Время до включения: ${formatDuration(diffOnMs)}`;
-    resultOffP.textContent = `Время до выключения: ${formatDuration(diffOffMs)}`;
+    const formattedDurationOn = formatDuration(diffOnMs);
+    const formattedDurationOff = formatDuration(diffOffMs);
+
+    // ================== ИЗМЕНЕНИЕ ПРЕФИКСОВ РЕЗУЛЬТАТА ==================
+    resultOnP.textContent = `Min draw time: ${formattedDurationOn}`;
+    resultOffP.textContent = `Max draw time: ${formattedDurationOff}`;
+    // ===================================================================
 
   } catch (error) {
-    console.error("Произошла ошибка при расчете:", error);
-    errorMessageP.textContent = 'Произошла непредвиденная ошибка при расчете.';
-    errorMessageP.classList.add('visible'); // Показываем блок ошибки
+    console.error("Calculation error:", error);
+    errorMessageP.textContent = 'An unexpected error occurred during calculation.';
+    errorMessageP.classList.add('visible');
   }
 }
 
@@ -103,8 +109,8 @@ function resetCalculator() {
   offTimeInput.value = '';
   resultOnP.textContent = '';
   resultOffP.textContent = '';
-  errorMessageP.textContent = ''; // Очищаем текст ошибки
-  errorMessageP.classList.remove('visible'); // Скрываем блок ошибки
+  errorMessageP.textContent = '';
+  errorMessageP.classList.remove('visible');
 }
 
 // --- Добавляем слушатели событий ---
