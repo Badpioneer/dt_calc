@@ -99,22 +99,22 @@ button:active {
 
 /* Основная кнопка */
 #calculate-btn {
-  background-color: #3182ce; /* Насыщенный синий */
+  background-color: #4caf50; /* Новый зеленый цвет */
   color: white;
 }
 
 #calculate-btn:hover {
-  background-color: #2b6cb0; /* Темнее при наведении */
+  background-color: #45a049; /* Чуть темнее зеленый для hover */
 }
 
 /* Кнопка сброса */
 #reset-btn {
-  background-color: #e53e3e; /* Красный */
+  background-color: #f44336; /* Новый красный цвет (rgb(244, 67, 54)) */
   color: white;
 }
 
 #reset-btn:hover {
-  background-color: #c53030; /* Темнее при наведении */
+  background-color: #d32f2f; /* Чуть темнее красный для hover */
 }
 
 /* --- Область результатов --- */
@@ -140,7 +140,7 @@ button:active {
 .results p#error-message {
   display: none; /* Скрыто по умолчанию */
   background-color: #fed7d7; /* Светло-красный фон */
-  border-color: #e53e3e; /* Красная полоска слева */
+  border-left-color: #e53e3e; /* Красная полоска слева (заменил border-color на border-left-color)*/
   color: #9b2c2c; /* Темно-красный текст */
   font-weight: 500;
 }
